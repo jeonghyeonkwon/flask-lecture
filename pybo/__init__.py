@@ -3,6 +3,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
 import config
+from pybo.filter import format_datetime
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -23,4 +24,9 @@ def create_app():
     app.register_blueprint(question_views.bp)
     app.register_blueprint(answer_views.bp)
     
+    # 필터
+    from .filter import format_datetime
+    app.jinja_env.filters['datetime'] = format_datetime
+
     return app
+
